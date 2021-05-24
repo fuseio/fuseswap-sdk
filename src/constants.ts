@@ -1,3 +1,4 @@
+import { Token, WETH } from 'entities'
 import JSBI from 'jsbi'
 
 // exports for external consumption
@@ -48,4 +49,54 @@ export enum SolidityType {
 export const SOLIDITY_TYPE_MAXIMA = {
   [SolidityType.uint8]: JSBI.BigInt('0xff'),
   [SolidityType.uint256]: JSBI.BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+}
+
+const WETH_ONLY = {
+  [ChainId.MAINNET]: [WETH[ChainId.MAINNET]],
+  [ChainId.ROPSTEN]: [WETH[ChainId.ROPSTEN]],
+  [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
+  [ChainId.GÖRLI]: [WETH[ChainId.GÖRLI]],
+  [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
+  [ChainId.FUSE]: [WETH[ChainId.FUSE]]
+}
+
+export const USDC = new Token(
+  ChainId.FUSE,
+  '0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5',
+  6,
+  'USDC',
+  'USD Coin on Fuse'
+)
+export const USDT = new Token(
+  ChainId.FUSE,
+  '0xFaDbBF8Ce7D5b7041bE672561bbA99f79c532e10',
+  6,
+  'USDT',
+  'Tether USD on Fuse'
+)
+export const WBTC = new Token(
+  ChainId.FUSE,
+  '0x33284f95ccb7B948d9D352e1439561CF83d8d00d',
+  8,
+  'WBTC',
+  'Wrapped BTC on Fuse'
+)
+export const FUSE_WETH = new Token(
+  ChainId.FUSE,
+  '0xa722c13135930332eb3d749b2f0906559d2c5b99',
+  18,
+  'WETH',
+  'Wrapped Ether on Fuse'
+)
+export const FUSD = new Token(
+  ChainId.FUSE,
+  '0x249BE57637D8B013Ad64785404b24aeBaE9B098B',
+  18,
+  'fUSD',
+  'Fuse Dollar'
+)
+
+export const BASES_TO_CHECK_TRADES_AGAINST = {
+  ...WETH_ONLY,
+  [ChainId.FUSE]: [...WETH_ONLY[ChainId.FUSE], USDC, USDT, WBTC, FUSE_WETH, FUSD ]
 }
